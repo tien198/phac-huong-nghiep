@@ -1,0 +1,230 @@
+@import url(desktop.css);
+@import url(tablet.css);
+@import url(mobile.css);
+@import url(ultilities.css);
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+:root {
+    --color-orange: #ff9600;
+    --color-blue: #3552A0;
+}
+
+// Utilities
+img {
+    width: 100%;
+    margin: 1rem 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+footer {
+    color: #fff;
+
+    a {
+        color: #fff;
+        text-decoration: none;
+
+        &:hover {
+            color: var(--color-blue);
+        }
+    }
+}
+
+.bg-orange {
+    background-color: var(--color-orange);
+}
+
+.text-orange {
+    color: var(--color-orange);
+}
+
+.fs-7 {
+    font-size: .9rem;
+}
+
+.fs-8 {
+    font-size: .7rem;
+}
+
+.box-shadow {
+    box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+}
+
+.active {
+    color: var(--color-orange) !important;
+}
+
+.nav-link {
+    color: black;
+
+    &:hover {
+        color: var(--color-orange) !important;
+    }
+}
+
+.detail {
+    display: block;
+    background-color: var(--color-orange);
+    width: 100%;
+    padding: .5rem 0;
+    color: #fff;
+    text-align: center;
+}
+
+
+
+
+
+
+#slider {
+    background-image: url(../imgs/slider.jpg);
+    width: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 40rem;
+    position: relative;
+
+    #inSlider-div {
+        position: absolute;
+        padding: 2rem 5rem;
+        border-radius: .2rem;
+        transform: translate(-50%, 0%);
+        bottom: 2%;
+        left: 50%;
+        background-color: rgba(0, 0, 0, 0.7);
+        color: white;
+        text-transform: uppercase;
+        display: grid;
+        gap: 2rem;
+        grid-template-columns: repeat(3, 1fr);
+
+        a {
+            color: #fff;
+            text-decoration: none;
+
+            &:hover {
+                color: var(--color-orange);
+            }
+        }
+
+        i {
+            font-size: 2.5rem;
+
+            &:before {
+                border: .2rem solid var(--color-orange);
+                border-radius: 50%;
+                padding: 1rem;
+                display: block;
+            }
+        }
+    }
+}
+
+
+.snow-effect {
+    height: 100%;
+    background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+    overflow: hidden;
+    filter: drop-shadow(0 0 10px white);
+    position: relative;
+}
+
+@function random_range($min, $max) {
+    $rand: random();
+    $random_range: $min + floor($rand * (($max - $min) + 1));
+    @return $random_range;
+}
+
+.snow {
+    $total: 200;
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: white;
+    border-radius: 50%;
+    z-index: -1;
+
+    @for $i from 1 through $total {
+        $random-x: random(1000000) * 0.0001vw;
+        $random-offset: random_range(-100000, 100000) * 0.0001vw;
+        $random-x-end: $random-x + $random-offset;
+        $random-x-end-yoyo: $random-x + calc($random-offset / 2);
+        $random-yoyo-time: calc(random_range(30000, 80000) / 100000);
+        $random-yoyo-y: $random-yoyo-time * 100vh;
+        $random-scale: random(10000) * 0.0001;
+        $fall-duration: random_range(10, 30) * 1s;
+        $fall-delay: random(30) * -1s;
+
+        &:nth-child(#{$i}) {
+            opacity: random(10000) * 0.0001;
+            transform: translate($random-x, -10px) scale($random-scale);
+            animation: fall-#{$i} $fall-duration $fall-delay linear infinite;
+        }
+
+        @keyframes fall-#{$i} {
+            #{percentage($random-yoyo-time)} {
+                transform: translate($random-x-end, $random-yoyo-y) scale($random-scale);
+            }
+
+            to {
+                transform: translate($random-x-end-yoyo, 100vh) scale($random-scale);
+            }
+        }
+    }
+}
+
+
+
+
+
+
+@media (max-width: 992px) {
+    #slider {
+        background-size: contain;
+        height: 30rem;
+
+        #inSlider-div {
+            width: 100%;
+            background-color: rgba(33, 37, 41, .9);
+
+            grid-template-columns: repeat(6, 1fr);
+
+            #item-1 {
+                grid-column: 1/4;
+            }
+
+            #item-2 {
+                grid-column: 4/7;
+            }
+
+            #item-3 {
+                grid-column: 2/6;
+            }
+        }
+    }
+}
+
+@media (max-width: 576px) {
+
+    #slider {
+        height: 23rem;
+
+        #inSlider-div {
+            padding: 2rem 3rem;
+
+            font-size: 1rem;
+
+            i {
+                font-size: 1rem;
+            }
+        }
+    }
+}
